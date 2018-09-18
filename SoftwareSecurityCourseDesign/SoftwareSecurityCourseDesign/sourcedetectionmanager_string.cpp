@@ -5,31 +5,60 @@ SourceDetectionManager_string::SourceDetectionManager_string()
 
 }
 
-int SourceDetectionManager_string::Modify(QString input, QString &output)
+SourceDetectionManager_string::~SourceDetectionManager_string()
+{
+
+}
+
+int SourceDetectionManager_string::Modify(QString &input)
 {
     int len = input.length();
+    if(len <= 0)
+    {
+        return 0;
+    }
+    QString output;
+    output.clear();
     for(int i = 0;i < len;i++)
     {
-        if(input[i] == ' ' || input[i] == '\n' || input[i] == '\t'|| input[i] == '\r' )
+        if(input[i] == ' ' || input[i] == '\n' || input[i] == '\t' || input[i] == '\r')
         {
             continue;
         }
         output.append(input[i]);
     }
+    input.clear();
+    input.append(output);
     return 1;
 }
 
-int SourceDetectionManager_string::File2String(QString filePath, QString &string,QString &outputBufa)
+int SourceDetectionManager_string::LoadCode(QString input)
 {
-    QFile qfile(filePath);
-    if(!qfile.open(QIODevice::ReadOnly))
+    if(input.isEmpty())
     {
-        outputBufa = "文件打开失败!";
-        qfile.close();
         return 0;
     }
-    QTextStream stream(&qfile);
-    string = stream.readAll();
-    outputBufa = "读取文件成功!";
+    code.clear();
+    code.append(input);
+    Modify(code);
+    qDebug() << code;
     return 1;
 }
+
+int SourceDetectionManager_string::LoadLibs(QStringList input)
+{
+    if(input.isEmpty())
+    {
+        return 0;
+    }
+    libs.clear();
+    QList<QString>::iterator iter = input.begin();
+    for(;iter!=input.end();iter++)
+    {
+        libs.append(*iter);
+    }
+    Modify(libs);
+    qDebug() << libs;
+    return 1;
+}
+
