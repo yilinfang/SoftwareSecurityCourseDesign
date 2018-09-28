@@ -38,6 +38,9 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <property name="elideMode">
+     <enum>Qt::ElideLeft</enum>
+    </property>
     <widget class="QWidget" name="tab_1">
      <attribute name="title">
       <string>同源性检测</string>
@@ -65,7 +68,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label_filePath_tab1">
@@ -78,7 +81,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_getFilePath_tab1">
@@ -99,7 +102,7 @@
        <rect>
         <x>0</x>
         <y>100</y>
-        <width>120</width>
+        <width>130</width>
         <height>32</height>
        </rect>
       </property>
@@ -112,7 +115,7 @@
        <rect>
         <x>120</x>
         <y>100</y>
-        <width>131</width>
+        <width>130</width>
         <height>32</height>
        </rect>
       </property>
@@ -123,9 +126,9 @@
      <widget class="QPushButton" name="pushButton_sourceDetect_crossfile">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>240</x>
         <y>100</y>
-        <width>120</width>
+        <width>130</width>
         <height>32</height>
        </rect>
       </property>
@@ -143,7 +146,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
     </widget>

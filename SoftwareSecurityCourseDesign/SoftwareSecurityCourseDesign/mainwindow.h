@@ -28,9 +28,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     SourceDetectionManager_string sdm_s;
-
-    int File2String(QString filePath, QString &string,QString &outputBufa);
-    int Dir2Stringlist(QString dirPath,QStringList &stringList, QString &outputBufa);
+    QString outputBufa;
 };
 
 #endif // MAINWINDOW_H
