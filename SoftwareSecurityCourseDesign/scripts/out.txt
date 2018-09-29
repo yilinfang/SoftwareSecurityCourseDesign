@@ -1,8 +1,0 @@
-_KEYWORD _KEYWORD()
-{
-	
-	
-	_KEYWORD _ID = _CHAR;
-	_KEYWORD(_STRING);
-	_KEYWORD 0;
-}
