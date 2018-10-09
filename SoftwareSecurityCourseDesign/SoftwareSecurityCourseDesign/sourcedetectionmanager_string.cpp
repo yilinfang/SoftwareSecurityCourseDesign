@@ -2,68 +2,14 @@
 
 SourceDetectionManager_string::SourceDetectionManager_string()
 {
-
+    scriptsPath = QCoreApplication::applicationDirPath() + "/scripts/";
+    qDebug() << scriptsPath;
+    bufferPath = QCoreApplication::applicationDirPath() + "/buffer/";
 }
 
 SourceDetectionManager_string::~SourceDetectionManager_string()
 {
 
-}
-
-int SourceDetectionManager_string::Modify(QString &input)
-{
-    int len = input.length();
-    if(len <= 0)
-    {
-        return 0;
-    }
-    QString output;
-    output.clear();
-    for(int i = 0;i < len;i++)
-    {
-        if(input[i] == ' ' || input[i] == '\n' || input[i] == '\t' || input[i] == '\r')
-        {
-            continue;
-        }
-        output.append(input[i]);
-    }
-    input.clear();
-    input.append(output);
-    return 1;
-}
-
-int SourceDetectionManager_string::RemoveComments(QString &input)
-{
-    QString output;
-    output.clear();
-    int len = input.length();
-    int state = 0;
-    for(int i = 0;i < len;i++)
-    {
-        QString bufa;
-        bufa.clear();
-        bufa.append(input[i]);
-        if(input[i] == '\n')
-        {
-            break;
-        }
-    }
-}
-
-int SourceDetectionManager_string::RemoveComments(int  _state, QChar c)
-{
-    int state;
-    switch (_state) {
-    case 0:
-        if(c == '/')
-        {
-            state = 1;
-        }
-        break;
-    default:
-        break;
-    }
-    return state;
 }
 
 int SourceDetectionManager_string::LoadCode(QString input)
@@ -72,9 +18,9 @@ int SourceDetectionManager_string::LoadCode(QString input)
     {
         return 0;
     }
-    code.clear();
-    code.append(input);
-    qDebug() << qPrintable(code);
+    fileName.clear();
+    fileName.append(input);
+    qDebug() << qPrintable(fileName);
     return 1;
 }
 
@@ -84,13 +30,12 @@ int SourceDetectionManager_string::LoadLibs(QStringList input)
     {
         return 0;
     }
-    libs.clear();
+    fileNames.clear();
     QList<QString>::iterator iter = input.begin();
     for(;iter!=input.end();iter++)
     {
-        libs.append(*iter);
+        fileNames.append(*iter);
     }
-    qDebug() << qPrintable(libs);
     return 1;
 }
 
@@ -138,11 +83,51 @@ int SourceDetectionManager_string::Dir2Stringlist(QString dirPath, QStringList &
         filePath.append(dirPath);
         filePath.append("/");
         filePath.append(qDir[i]);
-        outputBufa = "打开文件夹成功!";
-        QString file,bufa;
-        File2String(filePath,file,bufa);
-        stringList.append(file);
+        qDebug() << filePath;
+        stringList.append(filePath);
     }
+    outputBufa = "打开文件夹成功!";
     return 1;
+}
+
+int SourceDetectionManager_string::Compare(QString &outputBufa)
+{
+     QString currentDate = QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss_zzz");
+     QString cmd = "python " + scriptsPath + "modifier.py " + fileName + " " + \
+             bufferPath + "sdm_s_m_" + currentDate +".txt";
+     system(cmd.toLocal8Bit().data());
+     cmd = "python " + scriptsPath + "tokenlaize.py " + bufferPath + "sdm_s_m_" + currentDate +".txt" + " " + \
+             bufferPath + "sdm_s_t_" + currentDate +".txt";
+     system(cmd.toLocal8Bit().data());
+     QList<QString>::iterator iter;
+     outputBufa.clear();
+     QTextCodec *codec = QTextCodec::codecForName("GBK");
+     for(iter = fileNames.begin(); iter != fileNames.end(); iter++)
+     {
+         cmd = "python " + scriptsPath + "modifier.py " + (*iter) + " " + \
+                 bufferPath + "m_b_" + "" + currentDate +".txt";
+         system(cmd.toLocal8Bit().data());
+         cmd = "python " + scriptsPath + "tokenlaize.py " + \
+                 bufferPath + "m_b_" + "" + currentDate +".txt" + " " + \
+                 bufferPath + "t_b_" + "" + currentDate +".txt";
+         system(cmd.toLocal8Bit().data());
+         cmd = "python " + scriptsPath + "similarity_check_str.py " + \
+                 bufferPath + "sdm_s_t_" + currentDate +".txt"+ " " + \
+                 bufferPath + "t_b_" + currentDate +".txt" + " " + \
+                 bufferPath + "a_b_" + currentDate +".txt";
+         system(cmd.toLocal8Bit().data());
+         QFile f(bufferPath + "a_b_" + "" + currentDate +".txt");
+         f.open(QIODevice::ReadOnly);
+         QString str = "相对于" + *(iter)  + codec->toUnicode(f.readAll());
+         qDebug() << str;
+         outputBufa.append(str);
+         f.close();
+     }
+     cmd = "python " + scriptsPath + "bugfinder.py " + \
+             scriptsPath + "helloworld.cpp"+ " " + \
+             scriptsPath + "out.txt" + " " + \
+             "2";
+     system(cmd.toLocal8Bit().data());
+     return 0;
 }
 

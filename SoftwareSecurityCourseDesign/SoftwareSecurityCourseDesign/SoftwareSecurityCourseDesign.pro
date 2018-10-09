@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    sourcedetectionmanager_string.cpp
+    sourcedetectionmanager_string.cpp \
+    sourcedetectionmanager_cfg.cpp
 
 HEADERS += \
         mainwindow.h \
-    sourcedetectionmanager_string.h
+    sourcedetectionmanager_string.h \
+    sourcedetectionmanager_cfg.h
 
 FORMS += \
         mainwindow.ui

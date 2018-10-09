@@ -1,5 +1,5 @@
-#ifndef SOURCEDETECTIONMANAGER_STRING_H
-#define SOURCEDETECTIONMANAGER_STRING_H
+#ifndef SOURCEDETECTIONMANAGER_CFG_H
+#define SOURCEDETECTIONMANAGER_CFG_H
 #include <QString>
 #include <QStringList>
 #include <QDebug>
@@ -11,15 +11,12 @@
 #include <QCoreApplication>
 #include <QTextCodec>
 
-class SourceDetectionManager_string
+class sourcedetectionmanager_cfg
 {
 public:
-    SourceDetectionManager_string();
-    ~SourceDetectionManager_string();
+    sourcedetectionmanager_cfg();
     int LoadCode(QString input);
     int LoadLibs(QStringList input);
-    static int File2String(QString filePath, QString &string,QString &outputBufa);
-    static int Dir2Stringlist(QString dirPath,QStringList &stringList, QString &outputBufa);
     int Compare(QString &outputBufa);
 private:
     QString fileName;
@@ -28,4 +25,4 @@ private:
     QStringList fileNames;
 };
 
-#endif // SOURCEDETECTIONMANAGER_STRING_H
+#endif // SOURCEDETECTIONMANAGER_CFG_H

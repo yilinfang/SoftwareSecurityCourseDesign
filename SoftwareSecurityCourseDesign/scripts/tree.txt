@@ -1,2 +1,0 @@
-main() <int main () at helloworld.cpp:1>:
-    printf()
