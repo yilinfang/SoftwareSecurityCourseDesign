@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     sourcedetectionmanager_string.cpp \
-    sourcedetectionmanager_cfg.cpp
+    sourcedetectionmanager_cfg.cpp \
+    mythread.cpp
 
 HEADERS += \
         mainwindow.h \
     sourcedetectionmanager_string.h \
-    sourcedetectionmanager_cfg.h
+    sourcedetectionmanager_cfg.h \
+    mythread.h
 
 FORMS += \
         mainwindow.ui

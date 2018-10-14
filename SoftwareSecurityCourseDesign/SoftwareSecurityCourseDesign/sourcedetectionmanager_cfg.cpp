@@ -64,6 +64,7 @@ int sourcedetectionmanager_cfg::Compare(QString &outputBufa)
         qDebug() << str;
         outputBufa.append(str);
         f1.close();
+        qApp->processEvents();
     }
     return 0;
 }

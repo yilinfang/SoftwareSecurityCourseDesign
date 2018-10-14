@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "sourcedetectionmanager_string.h"
 #include "sourcedetectionmanager_cfg.h"
+#include "mythread.h"
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
@@ -11,6 +12,8 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QTextCodec>
+#include <QDateTime>
+#include <QMutex>
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +31,9 @@ private slots:
     void on_pushButton_getFilePath_tab1_clicked();
     void on_pushButton_sourceDetecter_string_clicked();
     void on_pushButton_sourceDetect_cfg_clicked();
+    void on_pushButton_getDirpath_tab2_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -35,6 +41,7 @@ private:
     sourcedetectionmanager_cfg sdm_cfg;
     QString outputBufa;
     QString bufferPath;
+    QMutex* mutex;
 };
 
 #endif // MAINWINDOW_H
